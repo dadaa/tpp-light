@@ -44,7 +44,7 @@ class App {
       audio: true,
       video: true,
     });
-    await this.createAudienceUI(localStream, peer.id);
+    await this.createAudienceUI(localStream, peer.id, true);
     return localStream;
   }
 
@@ -55,7 +55,7 @@ class App {
     });
   }
 
-  async createAudienceUI(stream, peerId) {
+  async createAudienceUI(stream, peerId, isMuted) {
     const li = document.createElement("li");
     li.classList.add("audience");
     li.id = this.getAudienceId(peerId);
@@ -63,6 +63,7 @@ class App {
 
     const video = document.createElement("video");
     video.classList.add("audience-stream");
+    video.muted = isMuted;
     video.srcObject = stream;
     video.playsInline = true;
     await video.play();
@@ -117,6 +118,7 @@ class App {
     const audience = $(`#${ this.getAudienceId(peerId) }`);
     const audienceVideo = audience.querySelector("video");
     const presenterVideo = $("#presenter-stream");
+    presenterVideo.muted = peerId === this.peer.id;
     presenterVideo.srcObject = audienceVideo.srcObject;
     await presenterVideo.play();
 
@@ -158,7 +160,7 @@ class App {
   }
 
   async onStream(stream) {
-    await this.createAudienceUI(stream, stream.peerId);
+    await this.createAudienceUI(stream, stream.peerId, false);
 
     // Tell the current presenter to new audience.
     const { peerId } = $(`.selected-audience`).dataset;
