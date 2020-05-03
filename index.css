@@ -24,10 +24,15 @@ ul, li {
 
 #connect-button {
   background: none;
-  border: 1px solid gray;
-  color: gray;
+  border: 1px solid #38383d;
+  color: #38383d;
   font-size: 5vw;
   font-weight: 100;
+}
+
+#connect-button:disabled {
+  border-color: #d7d7db;
+  color: #d7d7db;
 }
 
 #room-label {
