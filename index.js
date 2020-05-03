@@ -3,6 +3,8 @@ class App {
     this.onClickConnect = this.onClickConnect.bind(this);
 
     this.onClickAudience = this.onClickAudience.bind(this);
+    this.onClickAudioMuting = this.onClickAudioMuting.bind(this);
+    this.onClickCameraMuting = this.onClickCameraMuting.bind(this);
     this.onClickCameraSwitching = this.onClickCameraSwitching.bind(this);
     this.onClickPresenterStream = this.onClickPresenterStream.bind(this);
 
@@ -24,11 +26,11 @@ class App {
     }
 
     $("#room-label").textContent = this.roomId;
-    $("#connect-button").addEventListener("click", this.onClickConnect);
-
-    $("#presenter-stream").addEventListener("click", this.onClickPresenterStream);
-
+    $("#audio-muting").addEventListener("click", this.onClickAudioMuting);
+    $("#camera-muting").addEventListener("click", this.onClickCameraMuting);
     $("#camera-switching").addEventListener("click", this.onClickCameraSwitching);
+    $("#connect-button").addEventListener("click", this.onClickConnect);
+    $("#presenter-stream").addEventListener("click", this.onClickPresenterStream);
   }
 
   async connect() {
@@ -167,6 +169,13 @@ class App {
     this.dispatchToRoom({ command: "switch-presenter-stream", peerId });
   }
 
+  onClickAudioMuting({ target }) {
+    target.classList.toggle("disabled");
+    const video = $(".local-stream");
+    const track = video.srcObject.getAudioTracks()[0];
+    track.enabled = !target.classList.contains("disabled");
+  }
+
   async onClickCameraSwitching() {
     const stream = await this.getNextVideoStream();
 
@@ -183,6 +192,13 @@ class App {
     const audienceVideo = $(".local-stream");
     audienceVideo.srcObject = stream;
     audienceVideo.play();
+  }
+
+  onClickCameraMuting({ target }) {
+    target.classList.toggle("disabled");
+    const video = $(".local-stream");
+    const track = video.srcObject.getVideoTracks()[0];
+    track.enabled = !target.classList.contains("disabled");
   }
 
   async onClickConnect() {
