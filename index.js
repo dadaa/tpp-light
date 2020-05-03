@@ -202,12 +202,13 @@ class App {
   }
 
   async onClickConnect() {
+    $("#connect-button").disabled = true;
+
     try {
       await this.connect();
     } catch (e) {
       console.log(e);
     }
-
 
     $("#connect-form").remove();
   }
