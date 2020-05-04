@@ -122,7 +122,13 @@ class App {
   }
 
   amIPresenter() {
-    const { peerId } = $(".selected-audience").dataset;
+    const selectedAudience = $(".selected-audience");
+    if (!selectedAudience) {
+      // As no presenter yet, I am not the presenter.
+      return false;
+    }
+
+    const { peerId } = selectedAudience.dataset;
     return peerId === this.peer.id;
   }
 
