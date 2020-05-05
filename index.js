@@ -19,9 +19,15 @@ class App {
     const url = new URL(document.URL);
     this.key = url.searchParams.get("key");
     this.roomId = url.searchParams.get("roomId");
+    this.network = url.searchParams.get("network");
 
-    if (!this.key || !this.roomId) {
-      alert("No key or room id");
+    if (!this.key || !this.roomId || !this.network) {
+      alert("No key, room id or network");
+      return;
+    }
+
+    if (this.network !== "sfu" && this.network !== "mesh") {
+      alert("network should be 'sfu' or 'mesh'");
       return;
     }
 
@@ -37,7 +43,7 @@ class App {
     const peer = await this.connectPeer(this.key);
     const stream = await this.getNextVideoStream();
     const room = peer.joinRoom(this.roomId, {
-      mode: "mesh",
+      mode: this.network,
       stream: stream
     });
 
