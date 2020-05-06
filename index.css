@@ -65,6 +65,7 @@ main {
   justify-content: center;
   bottom: 0;
   width: 100%;
+  pointer-events: none;
 }
 
 .audience {
@@ -72,6 +73,7 @@ main {
   height: 100px;
   width: 100px;
   background-color: #f9f9fa;
+  pointer-events: auto;
 }
 
 .selected-audience {
@@ -114,13 +116,10 @@ main {
 
 #controller {
   position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: end;
-  width: 100%;
-  padding-top: 16px;
+  top: 16px;
+  right: 16px;
   z-index: 1;
+  pointer-events: none;
 }
 
 #controller button {
@@ -130,6 +129,7 @@ main {
   background-size: cover;
   border: none;
   outline: none;
+  pointer-events: auto;
 }
 
 #camera-switching {
